@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 const useFetch = (url) => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState(null);     // these are the state props
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
 
@@ -19,14 +19,14 @@ const useFetch = (url) => {
       .then(data => {
         setIsPending(false);
         setData(data);
-        setError(null);
+        setError(null);  // no error if successful
       })
       .catch(err => {
         if (err.name === 'AbortError') {
           console.log('fetch aborted')
         } else {
           // auto catches network / connection error
-          setIsPending(false);
+          setIsPending(false);  // so it doesnt show loading message
           setError(err.message);
         }
       })
@@ -34,7 +34,7 @@ const useFetch = (url) => {
 
     // abort the fetch
     return () => abortCont.abort();
-  }, [url])
+  }, [url])   // url is the dependency
 
   return { data, isPending, error };
 }
